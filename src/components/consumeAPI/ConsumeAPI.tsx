@@ -28,7 +28,7 @@ interface Data {
 function ConsumeAPI() {
   const [data, setData] = useState<Data | null>(null);
 
-  useEffect(() => {
+  useEffect(()  => {
     const fetchData = async () => {
       try {
         const response = await fetch("../../api/db.json");
