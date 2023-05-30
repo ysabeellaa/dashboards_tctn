@@ -1,0 +1,29 @@
+.tableContainer {
+    width: 100%;
+    margin-bottom: 4rem;
+    
+  }
+  
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 20%;
+    thead{
+      background-color: #f2f2f2;
+  
+    }
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+  
+  .title{
+    margin: 2rem 0;
+  }
+
+  .chartContainer{
+    margin-bottom: 2rem;
+  }

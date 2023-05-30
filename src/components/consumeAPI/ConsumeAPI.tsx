@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import db from "../../api/db.json";
 
 interface Company {
   id: number;
@@ -10,6 +9,8 @@ interface User {
   id: number;
   name: string;
   companyId: number;
+  email: string;
+  unitId: number;
 }
 
 interface Asset {
@@ -28,15 +29,26 @@ interface Data {
 function ConsumeAPI() {
   const [data, setData] = useState<Data | null>(null);
 
-  useEffect(()  => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("../../api/db.json");
-        const jsonData = await response.json();
-        setData(jsonData);
-      } catch (error) {
+  useEffect(() => {
+    const fetchData = () => {
+      Promise.all([
+        fetch("http://localhost:3000/companies"),
+        fetch("http://localhost:3000/users"),
+        fetch("http://localhost:3000/assets")
+      ])
+      .then((responses) => {
+        return Promise.all(responses.map((response) => response.json()));
+      })
+      .then(([companiesData, usersData, assetsData]) => {
+        setData({
+          companies: companiesData,
+          users: usersData,
+          assets: assetsData
+        });
+      })
+      .catch((error) => {
         console.log("Erro ao buscar os dados da API:", error);
-      }
+      });
     };
 
     fetchData();
@@ -48,7 +60,8 @@ function ConsumeAPI() {
 
   return (
     <div>
-      <h1>Empresas</h1>
+      
+      <h1>Company</h1>
       {data.companies.map((company) => (
         <div key={company.id}>
           <h2>{company.name}</h2>
